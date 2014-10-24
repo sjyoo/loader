@@ -165,7 +165,22 @@ class Loader(object):
             raise ServerError('Unknown', 0, 'An unknown server error occurred')
         return resp['result']
 
-    def mys_example(self, args):
-        resp = self._call('Loader.mys_example',
-                          [args])
+    def import_data(self, ImportParam):
+        resp = self._call('Loader.import_data',
+                          [ImportParam])
+        return resp[0]
+
+    def validate(self, ValidateParam):
+        resp = self._call('Loader.validate',
+                          [ValidateParam])
+        return resp[0]
+
+    def uploader(self, UploadParam):
+        resp = self._call('Loader.uploader',
+                          [UploadParam])
+        return resp[0]
+
+    def download(self, DownloadParam):
+        resp = self._call('Loader.download',
+                          [DownloadParam])
         return resp[0]

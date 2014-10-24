@@ -27,12 +27,18 @@ has 'config' => (is => 'ro', required => 1, builder => '_build_config');
 our $CallContext;
 
 our %return_counts = (
-        'mys_example' => 1,
+        'import_data' => 1,
+        'validate' => 1,
+        'uploader' => 1,
+        'download' => 1,
         'version' => 1,
 );
 
 our %method_authentication = (
-        'mys_example' => 'required',
+        'import_data' => 'required',
+        'validate' => 'required',
+        'uploader' => 'required',
+        'download' => 'required',
 );
 
 
@@ -40,7 +46,10 @@ sub _build_valid_methods
 {
     my($self) = @_;
     my $methods = {
-        'mys_example' => 1,
+        'import_data' => 1,
+        'validate' => 1,
+        'uploader' => 1,
+        'download' => 1,
         'version' => 1,
     };
     return $methods;

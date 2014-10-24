@@ -264,10 +264,22 @@ class Application(object):
         self.serverlog.set_log_level(6)
         self.rpc_service = JSONRPCServiceCustom()
         self.method_authentication = dict()
-        self.rpc_service.add(impl_Loader.mys_example,
-                             name='Loader.mys_example',
+        self.rpc_service.add(impl_Loader.import_data,
+                             name='Loader.import_data',
                              types=[dict])
-        self.method_authentication['Loader.mys_example'] = 'required'
+        self.method_authentication['Loader.import_data'] = 'required'
+        self.rpc_service.add(impl_Loader.validate,
+                             name='Loader.validate',
+                             types=[dict])
+        self.method_authentication['Loader.validate'] = 'required'
+        self.rpc_service.add(impl_Loader.uploader,
+                             name='Loader.uploader',
+                             types=[dict])
+        self.method_authentication['Loader.uploader'] = 'required'
+        self.rpc_service.add(impl_Loader.download,
+                             name='Loader.download',
+                             types=[dict])
+        self.method_authentication['Loader.download'] = 'required'
         self.auth_client = biokbase.nexus.Client(
             config={'server': 'nexus.api.globusonline.org',
                     'verify_ssl': True,

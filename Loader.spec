@@ -31,13 +31,13 @@ module Loader
   typedef string type_string;
   
   
-      typedef string shock_id;
+  typedef string shock_id;
   
-      /* optional shock_url */
-      typedef structure {
-          typedef shock_id id;
-          typedef string shock_url;
-      } shock_ref;
+  /* optional shock_url */
+  typedef structure {
+      shock_id id;
+      string shock_url;
+  } shock_ref;
   
   /* Information about a module copied from WS.
           
@@ -52,7 +52,6 @@ module Loader
           string chsum - the md5 checksum of the object.
           list<func_string> functions - list of names of functions registered in spec.
           boolean is_released - shows if this version of module was released (and hence can be seen by others).
-  */
   typedef structure {
           list<username> owners;
           spec_version ver;
@@ -60,64 +59,101 @@ module Loader
           string description;
           mapping<type_string, jsonschema> types;
           mapping<type_string, shock_ref> etypes;
-          mapping<type_string, shock_ref> validators; /* etype validators script reference in shock*/
-          mapping<type_string, shock_ref> transformers; /* etype translators script reference in shock*/
-          mapping<type_string, shock_ref> importer; /* etype importer script reference in shock*/
+          mapping<type_string, shock_ref> validators; 
+          mapping<type_string, shock_ref> transformers; 
+          mapping<type_string, shock_ref> importer; 
   
           mapping<modulename, spec_version> included_spec_version;
           string chsum;
           list<func_string> functions;
           boolean is_released;
   } ModuleInfo;
+  */
   
   
   typedef structure {
-      typedef type_string etype;
-      typedef string default_source_url;
-      typedef shock_ref script;
+      type_string etype;
+      string default_source_url;
+      shock_ref script;
+      /* mapping<string,string> optional_args; // optarg paramters */
   } Importer;
   
-  funcdef request_to_register_importer(Importer) returns (string result);
+  /*funcdef request_to_register_importer(Importer) returns (string result);
+  funcdef release_ importer(Importer) returns (string result);*/
   
-  funcdef release_ importer(Importer) return (string result);
+  /* @optional url */
+  typedef structure {
+      type_string etype;
+      string url;
+      string ws_name;
+      string obj_name;
+      string ext_source_name;
+      /* mapping<string, string> optional_args; // optarg key and values */ 
+  } ImportParam;
   
-  funcdef import(ext_type, string url) return (string result);
+  funcdef import_data(ImportParam) returns (string result);
   
   
   
   typedef structure {
-      typedef type_string etype;
-      typedef shock_ref validation_script;
+      type_string etype;
+      shock_ref validation_script;
   } Validator;
   
+  /*
   funcdef request_to_register_validator(Validator) returns (string result);
+  funcdef release_validator(Validator) returns (string result);
+   */
   
-  funcdef release_validator(Validator) return (string result);
-  
-  funcdef validate(type_string ext_type, shock_ref id) return (string result);
+  typedef structure {
+      type_string etype;
+      shock_ref id;
+      /* mapping<string, string> optional_args; // optarg key and values */ 
+  } ValidateParam;
+  funcdef validate(ValidateParam) returns (list<string> result);
   
   
   
   typedef structure {
-      typedef Validator validator;
-      typedef type_string kb_type;
-      typedef shock_ref translation_script;
+      Validator validator;
+      type_string kb_type;
+      shock_ref translation_script;
   } Uploader;
   
+  /*
   funcdef request_to_register_uploader(Uploader) returns (string result);
-  
-  funcdef release_uploader(Uploader) return (string result);
-  
-  funcdef uploader(type_string ext_type, type_string kb_type, shock_ref in_id, string ws_out_id, string out_obj_id) return (string result);     
+  funcdef release_uploader(Uploader) returns (string result);
+   */
   
   typedef structure {
-      typedef type_string kb_type;
-      typedef type_string ext_type;
-      typedef shock_ref translation_script;
+      type_string etype;
+      type_string kb_type;
+      shock_ref in_id;
+      string ws_name;
+      string obj_name;
+      /* mapping<string, string> optional_args; // optarg key and values */ 
+  } UploadParam;
+  funcdef uploader(UploadParam) returns (list<string> result);     
+  
+  typedef structure {
+      type_string kb_type;
+      type_string ext_type;
+      shock_ref translation_script;
   } Downloader;
   
-  funcdef request_to_register_downloader(Downloader) return (string url);
-  funcdef release_downloader(Downloader) return (string url);
-  funcdef download(type_string ext_type, ws_out_id, string ou_obj_id) return (string url);
+  /*
+  funcdef request_to_register_downloader(Downloader) returns (string result);
+  funcdef release_downloader(Downloader) returns (string result);
+   */
+
+  typedef structure {
+      type_string etype;
+      type_string kb_type;
+      shock_ref out_id;
+      string ws_name;
+      string obj_name;
+      /* mapping<string, string> optional_args; // optarg key and values */ 
+  } DownloadParam;
+  funcdef download(DownloadParam) returns (list<string> result);
   
 };

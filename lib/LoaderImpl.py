@@ -27,15 +27,54 @@ class Loader:
         #END_CONSTRUCTOR
         pass
 
-    def mys_example(self, ctx, args):
+    def import_data(self, ctx, ImportParam):
         # ctx is the context object
-        # return variables are: job_id
-        #BEGIN mys_example
-        #END mys_example
+        # return variables are: result
+        #BEGIN import_data
+        #END import_data
 
         # At some point might do deeper type checking...
-        if not isinstance(job_id, list):
-            raise ValueError('Method mys_example return value ' +
-                             'job_id is not type list as required.')
+        if not isinstance(result, basestring):
+            raise ValueError('Method import_data return value ' +
+                             'result is not type basestring as required.')
         # return the results
-        return [job_id]
+        return [result]
+
+    def validate(self, ctx, ValidateParam):
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN validate
+        #END validate
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, list):
+            raise ValueError('Method validate return value ' +
+                             'result is not type list as required.')
+        # return the results
+        return [result]
+
+    def uploader(self, ctx, UploadParam):
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN uploader
+        #END uploader
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, list):
+            raise ValueError('Method uploader return value ' +
+                             'result is not type list as required.')
+        # return the results
+        return [result]
+
+    def download(self, ctx, DownloadParam):
+        # ctx is the context object
+        # return variables are: result
+        #BEGIN download
+        #END download
+
+        # At some point might do deeper type checking...
+        if not isinstance(result, list):
+            raise ValueError('Method download return value ' +
+                             'result is not type list as required.')
+        # return the results
+        return [result]
